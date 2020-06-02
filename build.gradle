@@ -16,12 +16,9 @@ repositories {
     }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 bootJar {
@@ -30,6 +27,14 @@ bootJar {
 
 jar {
     enabled = true
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 dependencies {
@@ -43,9 +48,6 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {
