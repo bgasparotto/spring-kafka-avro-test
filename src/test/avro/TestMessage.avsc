@@ -1,0 +1,12 @@
+{
+  "namespace": "com.bgasparotto.spring.kafka.avro.test.message",
+  "type": "record",
+  "name": "TestMessage",
+  "fields": [
+    {
+      "name": "description",
+      "type": "string",
+      "avro.java.string": "String"
+    }
+  ]
+}
