@@ -3,12 +3,15 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id "com.commercehub.gradle.plugin.avro" version "0.9.1"
     id 'java-library'
+    id 'maven'
     id 'maven-publish'
+    id 'signing'
     id 'idea'
 }
 
 group 'com.bgasparotto'
-version '1.0.0-SNAPSHOT'
+archivesBaseName = 'spring-kafka-avro-test'
+version '1.0.0'
 
 repositories {
     mavenCentral()
@@ -30,10 +33,62 @@ jar {
     enabled = true
 }
 
+signing {
+    sign configurations.archives
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+        }
+    }
+}
+
+ext.ossrhUsername = System.getenv("OSSRH_USERNAME")
+ext.ossrhPassword = System.getenv("OSSRH_PASSWORD")
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name project.name
+                description project.description
+                packaging 'jar'
+                artifactId 'spring-kafka-avro-test'
+                url 'https://github.com/bgasparotto/spring-kafka-avro-test'
+
+                scm {
+                    connection 'scm:git:https://github.com/bgasparotto/spring-kafka-avro-test.git'
+                    developerConnection 'scm:git:git@github.com/bgasparotto/spring-kafka-avro-test.git'
+                    url 'https://github.com/bgasparotto/spring-kafka-avro-test.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'bgasparotto'
+                        name 'Bruno Gasparotto'
+                        email 'bruno.m.gasparotto@gmail.com'
+                    }
+                }
+            }
         }
     }
 }
