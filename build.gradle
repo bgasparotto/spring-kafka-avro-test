@@ -25,6 +25,10 @@ java {
     withSourcesJar()
 }
 
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
 bootJar {
     enabled = false
 }
