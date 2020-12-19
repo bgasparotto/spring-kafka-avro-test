@@ -54,14 +54,40 @@ public class KafkaAvroTest {
 ## Usage
 Consume a message:
 ```java
-SomeType someType = ...
-embeddedKafkaAvro.produce("topic", "message-key", someType);
+ConsumerRecord<String, SomeType> consumedRecord = embeddedKafkaAvro.consumeOne("topic");
 ```
 
 Produce a message:
 ```java
-ConsumerRecord<String, SomeType> consumedRecord = embeddedKafkaAvro.consumeOne("topic");
+SomeType someType = ...
+embeddedKafkaAvro.produce("topic", "message-key", someType);
 ```
+
+## Notes
+As this is a Kafka with Avro library, it expects the minimum configuration below:
+```yaml
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        specific:
+          avro:
+            reader: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    listener:
+      missing-topics-fatal: false
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
+```
+
+Please refer to [this project's docker-compose](https://github.com/bgasparotto/spring-kafka-avro-test/blob/master/docker-compose.yml) for a working example of Zookeeper, Kafka and Schema-registry.
 
 ## Building the project
 Run docker-compose:
