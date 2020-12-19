@@ -1,5 +1,5 @@
 # Spring Kafka Avro Test
-Small library that provide helper methods for testing Kafka and Avro integration.
+Library with helper methods for testing producers and consumers of Kafka messages with Avro schemas.
 
 ## TO-DO
 Publish on the Central Maven repository.

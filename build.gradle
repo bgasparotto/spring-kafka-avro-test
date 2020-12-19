@@ -11,7 +11,8 @@ plugins {
 
 group 'com.bgasparotto'
 archivesBaseName = 'spring-kafka-avro-test'
-version '1.0.0'
+version '1.0.2'
+description = "Library with helper methods for testing producers and consumers of Kafka messages with Avro schemas."
 
 repositories {
     mavenCentral()
@@ -98,13 +99,13 @@ uploadArchives {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.kafka:spring-kafka'
-    implementation 'org.springframework.kafka:spring-kafka-test'
+    api 'org.springframework.boot:spring-boot-starter'
+    api 'org.springframework.kafka:spring-kafka'
+    api 'org.springframework.kafka:spring-kafka-test'
 
-    implementation 'org.apache.avro:avro:1.9.1'
-    implementation 'io.confluent:kafka-avro-serializer:5.3.1'
-    implementation 'io.confluent:kafka-streams-avro-serde:5.3.1'
+    api 'org.apache.avro:avro:1.9.1'
+    api 'io.confluent:kafka-avro-serializer:5.3.1'
+    api 'io.confluent:kafka-streams-avro-serde:5.3.1'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
