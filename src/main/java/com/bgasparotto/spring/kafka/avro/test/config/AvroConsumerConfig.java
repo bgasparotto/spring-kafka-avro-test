@@ -4,16 +4,15 @@ import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AvroConsumerConfig {
 
-    private final EmbeddedKafkaBroker embeddedKafkaBroker;
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String kafkaBrokers;
 
     @Value("${spring.kafka.consumer.key-deserializer}")
     private String keyDeserializerClass;
@@ -27,11 +26,6 @@ public class AvroConsumerConfig {
     @Value("${spring.kafka.consumer.properties.specific.avro.reader}")
     private boolean specificAvroReader;
 
-    @Autowired
-    public AvroConsumerConfig(EmbeddedKafkaBroker embeddedKafkaBroker) {
-        this.embeddedKafkaBroker = embeddedKafkaBroker;
-    }
-
     public Map<String, Object> getConfig() {
         HashMap<String, Object> config = createDefaultConfig();
         addConsumerConfig(config);
@@ -41,7 +35,7 @@ public class AvroConsumerConfig {
     }
 
     private HashMap<String, Object> createDefaultConfig() {
-        return new HashMap<>(KafkaTestUtils.consumerProps("test-consumer", "false", embeddedKafkaBroker));
+        return new HashMap<>(KafkaTestUtils.consumerProps(kafkaBrokers, "test-consumer", "false"));
     }
 
     private void addConsumerConfig(HashMap<String, Object> config) {

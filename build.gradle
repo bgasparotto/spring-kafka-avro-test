@@ -11,7 +11,7 @@ plugins {
 
 group 'com.bgasparotto'
 archivesBaseName = 'spring-kafka-avro-test'
-version '1.0.2'
+version '1.0.3'
 description = "Library with helper methods for testing producers and consumers of Kafka messages with Avro schemas."
 
 repositories {
