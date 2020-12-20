@@ -46,6 +46,7 @@ spring:
 @SpringBootTest
 @ActiveProfiles("test")
 @EmbeddedKafka
+@DirtiesContext
 public class KafkaAvroTest {
     @Autowired
     private EmbeddedKafkaAvro embeddedKafkaAvro;
@@ -102,6 +103,15 @@ embedded Kafka container so the application contexts loads, by either:
 In any case, it's a good practise to load as fewer components as necessary for your test, so always
 prefer more specific contexts such as `@WebMvcTest`, `@RestClientTest`, etc instead of the wider
 `@SpringBootTest`.
+
+#### Dirty Spring's Application context when using `@EmbeddedKafka`
+If you observe log errors when the embedded Kafka is shutting down, such as:
+```
+kafka.server.LogDirFailureChannel: Error while renaming dir for message.scheduler.run-hansard-update-0 in dir /tmp/kafka-11062061126913658073
+java.nio.file.NoSuchFileException: /tmp/kafka-11062061126913658073/message.scheduler.run-hansard-update-0/00000000000000000001.snapshot
+```
+Add the annotation `@DirtiesContext` to your test class to tell Spring the context shouldn't be
+cached.
 
 ## Building the project
 Run docker-compose:
