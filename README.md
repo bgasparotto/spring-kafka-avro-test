@@ -33,8 +33,7 @@ On the `@SpringBootTest` annotation of the test class:
 public class KafkaAvroTest {
 }
 ```
-
-or on the `application-test.xml`:
+or on the `application-test.yml`:
 ```yaml
 spring:
   kafka:
@@ -93,9 +92,9 @@ Please refer to [this project's docker-compose](https://github.com/bgasparotto/s
 
 #### Adding `${spring.embedded.kafka.brokers}` to your `application-test.yml` profile
 When you choose to set your kafka brokers to `${spring.embedded.kafka.brokers}` on the
-`application-test.yml` instead of adding the property to `@SpringBootTest`, please bear in mind that
-any test class using the `test` profile annotated with `@SpringBootTest` will have to provided an
-embedded Kafka container so the application contexts loads, by either:
+`application-test.yml` file instead of adding the property to `@SpringBootTest`, please bear in mind
+that any test class using the *test* profile annotated with `@SpringBootTest` will have to provide
+an embedded Kafka container so the application contexts loads, by either:
 - Also annotating the test class with `@EmbeddedKafka` or 
 - Specifying the test components with `SpringBootTest(classes={ClassUnderTest.class})` to
   narrow-down the application context.
@@ -117,7 +116,7 @@ cached.
 Run docker-compose:
 ```shell script
 git clone https://github.com/bgasparotto/spring-kafka-avro-test.git
-cd spring-kafka-avro-test.git
+cd spring-kafka-avro-test
 docker-compose up -d
 ```
 
