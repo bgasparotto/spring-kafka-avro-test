@@ -1,3 +1,6 @@
+![build](https://github.com/bgasparotto/spring-kafka-avro-test/workflows/build/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bgasparotto_spring-kafka-avro-test&metric=alert_status)](https://sonarcloud.io/dashboard?id=bgasparotto_spring-kafka-avro-test)
+
 # Spring Kafka Avro Test
 Library with helper methods for testing producers and consumers of Kafka messages with Avro schemas.
 

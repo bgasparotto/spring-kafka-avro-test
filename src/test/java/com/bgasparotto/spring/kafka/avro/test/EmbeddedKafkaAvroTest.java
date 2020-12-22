@@ -12,11 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(classes = {EmbeddedKafkaAvro.class, AvroConsumerConfig.class, AvroProducerConfig.class})
 @ActiveProfiles("test")
 @EmbeddedKafka
+@DirtiesContext
 public class EmbeddedKafkaAvroTest {
 
     public static final String TEST_TOPIC = "message.test.topic";
