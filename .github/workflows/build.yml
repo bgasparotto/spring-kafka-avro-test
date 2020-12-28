@@ -41,5 +41,5 @@ jobs:
           java-version: '11'
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew release -Prelease.useAutomaticVersion=true -x test
+        run: ./gradlew release -Prelease.useAutomaticVersion=true -x test -x signArchives
 
